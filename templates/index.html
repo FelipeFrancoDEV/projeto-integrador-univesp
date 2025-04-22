@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <title>|Login | Regressão Linear | </title>
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=YU9heAkKfoK8jDoPjI1sPpASU2PiUnVkk5QLUneRTzShrP2xpsIGakqP6X4TmeAnRDi8wi_zZ4vgfy36YcjjX2WMA_YiVYOV2l-iokz9z9zKyP1DdkoxG5LAG4nOiyAb9zvSFpBWKkty65K45MnUBD5b07qYAugFz4FBsj3W-AA" charset="UTF-8"></script></head>
+<body>
+
+    <div class="top-container">
+        <h1>Regressão Linear fácil, prático e rápido!</h1>
+    </div>
+    <div class="container" id="container">
+        <!--FORMULÁRIO DE CADASTRO-->
+        <div class="form-container sign-up">
+            <form action="/cadastro" method="POST" enctype="multipart/form-data">
+                <h1>Criar conta</h1>
+
+                <input type="text" placeholder="Usuário" name="usuario">
+                <input type="email" placeholder="Email"   name= "email">
+                <input type="password" id="senha_cad" placeholder="Senha" name="senha">
+                <span id="show_password_cad" name="show_password" class="fa fa-eye-slash"></span>
+                <button>Cadastrar-se</button>
+            </form>
+        </div>
+        <!-- FORMULÁRIO DE LOGIN -->
+<div class="form-container sign-in">
+    <form action="/login" method="POST" enctype="multipart/form-data">
+        <h1>Entrar</h1>
+        <input type="text" name="usuario" placeholder="Usuário ou E-mail" required>
+        <input type="password" name="senha" id="senha" placeholder="Senha" required>
+        <span id="show_password" name="show_password" class="fa fa-eye-slash"></span>
+        <button type="submit">Entrar</button>
+    </form>
+</div>
+
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+
+                    <h1>
+                        Bem vindo de volta!
+                    </h1>
+                    <p>
+                        Insira seus dados pessoais para usar todos os recursos do site
+                    </p>
+                    <button class="hidden" id="login">Entrar</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h1>
+                        Olá, amigo!
+                    </h1>
+                    <p>
+                        Registre-se com seus dados pessoais para usar todos os recursos do site
+                    </p>
+                    <button class="hidden" id="register">Cadastrar-se</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="/static/script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="/static/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Capturar mensagens flash do Flask
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    Swal.fire({
+                        title: '{{ message }}',
+                        icon: '{{ category }}',
+                        confirmButtonText: 'OK',
+                        showConfirmButton: true,
+                        allowOutsideClick: false, // Não fecha clicando fora
+                        allowEscapeKey: false
+                    });
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    });
+    </script>
+
+</body>
+</html>
