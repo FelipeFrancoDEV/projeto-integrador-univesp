@@ -1,7 +1,7 @@
 #importando as bibliotecas python
-from flask import Flask, render_template, request, redirect, flash, url_for, session
-from flask_sqlalchemy import SQLAlchemy
-import bcrypt #Criptografar Senha
+from flask import Flask, render_template, request, redirect, flash, url_for, session # type: ignore
+from flask_sqlalchemy import SQLAlchemy # type: ignore
+import bcrypt # type: ignore #Criptografar Senha
 import secrets #gera números aleatórios criptograficamente fortes para gerenciar dados confidenciais
 
 app = Flask(__name__)
@@ -11,7 +11,7 @@ db = SQLAlchemy()
 #Temos que pensar numa forma de ocultar os dados do banco no link
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+mysqldb://univespsjc:Database2025@univespsjc.mysql.pythonanywhere-services.com:3306/univespsjc$default"
 app.config['SQLALCHEMY_POOL_RECYCLE'] = 299
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_TRACK_MODIFICgit commit -m "first commit"ONS'] = False
 db.init_app(app)#Estabelecendo conexão
 
 app.secret_key = secrets.token_hex(32) #gerando chave secreta para troca de mensagens e metodo redirect
