@@ -1,0 +1,54 @@
+RESULTADOS DA ANÁLISE DE REGRESSÃO
+==================================================
+
+Métricas do Modelo:
+- R²: 0.5704
+- RMSE: 31.8722
+- MAE: 20.3566
+
+Coeficientes do Modelo:
+  Variável  Coeficiente  Magnitude Absoluta
+5  Input06    44.301379           44.301379
+0  Input01    11.985859           11.985859
+4  Input05   -10.941324           10.941324
+3  Input04     9.520917            9.520917
+6  Input07     8.168042            8.168042
+7  Input08    -0.367588            0.367588
+1  Input02     0.277047            0.277047
+2  Input03    -0.027515            0.027515
+
+Modelo Estatístico:
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                 Target   R-squared:                       0.569
+Model:                            OLS   Adj. R-squared:                  0.568
+Method:                 Least Squares   F-statistic:                     1646.
+Date:                Fri, 25 Apr 2025   Prob (F-statistic):               0.00
+Time:                        22:23:16   Log-Likelihood:                -48842.
+No. Observations:                9992   AIC:                         9.770e+04
+Df Residuals:                    9983   BIC:                         9.777e+04
+Df Model:                           8                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const        355.4199     22.393     15.872      0.000     311.525     399.314
+Input01       11.5318      1.635      7.052      0.000       8.326      14.737
+Input02        0.2799      0.017     16.480      0.000       0.247       0.313
+Input03       -0.0245      0.008     -2.980      0.003      -0.041      -0.008
+Input04        9.5737      0.109     87.820      0.000       9.360       9.787
+Input05       -7.5073     23.536     -0.319      0.750     -53.642      38.627
+Input06       26.7131    117.661      0.227      0.820    -203.925     257.352
+Input07        8.4511      0.278     30.427      0.000       7.907       8.996
+Input08       -0.3615      0.007    -50.733      0.000      -0.376      -0.348
+==============================================================================
+Omnibus:                     4313.052   Durbin-Watson:                   0.111
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):            29014.607
+Skew:                          -1.946   Prob(JB):                         0.00
+Kurtosis:                      10.385   Cond. No.                     8.85e+05
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 8.85e+05. This might indicate that there are
+strong multicollinearity or other numerical problems.

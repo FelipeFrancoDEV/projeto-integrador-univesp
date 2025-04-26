@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
     <title>|Login | Regressão Linear | </title>
-</head>
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=YU9heAkKfoK8jDoPjI1sPpASU2PiUnVkk5QLUneRTzShrP2xpsIGakqP6X4TmeAnRDi8wi_zZ4vgfy36YcjjX2WMA_YiVYOV2l-iokz9z9zKyP1DdkoxG5LAG4nOiyAb9zvSFpBWKkty65K45MnUBD5b07qYAugFz4FBsj3W-AA" charset="UTF-8"></script></head>
 <body>
 
     <div class="top-container">
@@ -27,15 +27,15 @@
             </form>
         </div>
         <!-- FORMULÁRIO DE LOGIN -->
-<div class="form-container sign-in">
-    <form action="/login" method="POST" enctype="multipart/form-data">
-        <h1>Entrar</h1>
-        <input type="text" name="usuario" placeholder="Usuário ou E-mail" required>
-        <input type="password" name="senha" id="senha" placeholder="Senha" required>
-        <span id="show_password" name="show_password" class="fa fa-eye-slash"></span>
-        <button type="submit">Entrar</button>
-    </form>
-</div>
+    <div class="form-container sign-in">
+        <form action="/login" method="POST" enctype="multipart/form-data">
+            <h1>Entrar</h1>
+            <input type="text" name="usuario" placeholder="Usuário ou E-mail" required>
+            <input type="password" name="senha" id="senha" placeholder="Senha" required>
+            <span id="show_password" name="show_password" class="fa fa-eye-slash"></span>
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
 
         <div class="toggle-container">
             <div class="toggle">
@@ -68,24 +68,23 @@
     <script src="/static/jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-    
-    //document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
         // Capturar mensagens flash do Flask
-        //{% with messages = get_flashed_messages(with_categories=true) %}
-            //{% if messages %}
-               //% for category, message in messages %}
-                   //wal.fire({
-                        //title: '{{ message }}',
-                        //icon: '{{ category }}',
-                        //confirmButtonText: 'OK',
-                        //showConfirmButton: true,
-                        //allowOutsideClick: false, // Não fecha clicando fora
-                        //allowEscapeKey: false
-//});
-                //{% endfor %}
-           // {% endif %}
-        //{% endwith %}
-    //});
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    Swal.fire({
+                        title: '{{ message }}',
+                        icon: '{{ category }}',
+                        confirmButtonText: 'OK',
+                        showConfirmButton: true,
+                        allowOutsideClick: false, // Não fecha clicando fora
+                        allowEscapeKey: false
+                    });
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    });
     </script>
 
 </body>

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2 text-center">
+        <h1 class="mb-4">Análise de Regressão Linear</h1>
+        <p class="lead">Esta aplicação realiza uma análise de regressão linear no dataset fornecido.</p>
+        
+        <div class="card mt-5">
+            <div class="card-body">
+                <h5 class="card-title">Executar Análise</h5>
+                <p class="card-text">Clique no botão abaixo para executar a análise completa.</p>
+                <a href="{{ url_for('analisar') }}" class="btn btn-primary btn-lg">
+                    Executar Análise
+                </a>
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <h4>Dataset Utilizado</h4>
+            <p>O arquivo de dados deve estar no formato CSV com o nome <code>dados.csv</code>.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
