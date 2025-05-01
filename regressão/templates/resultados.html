@@ -3,15 +3,17 @@
 {% block content %}
 <style>
     /* Estilos para o visualizador ampliado */
+
 .image-viewer {
     display: none;
     position: fixed;
     top: 0;
     left: 0;
-    width: 90%;
+    width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: #242020;
     z-index: 1000;
+    align-items: center;
     text-align: center;
     overflow: auto;
 }
@@ -44,11 +46,19 @@
 
 .graph-thumbnail {
     cursor: pointer;
-    transition: transform 0.3s;
+    transition: transform 0.4s;
 }
 
 .graph-thumbnail:hover {
-    transform: scale(1.03);
+    transform: scale(1.05);
+}
+
+.row {
+    text-align: center;
+}
+
+.row-graphs {
+    text-align: center;
 }
 
 /* Novos estilos para navegação */
@@ -126,7 +136,7 @@
                 </div>
             </div>
         </div>
-       
+</div>       
         <!-- Container do visualizador de imagem ampliada -->
         <div id="imageViewer" class="image-viewer">
             <span class="close-viewer">&times;</span>
@@ -199,89 +209,82 @@
             </div>
         </div>
         <!-- Seção para os gráficos -->
-<div class="row mt-4">
-    <div class="col-md-6">
-        <div class="card mb-4">
-            <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Matriz de Correlação</h5>
-            </div>
-            <div class="card-body text-center">
-                <img src="{{ url_for('static', filename=plots.correlacao) }}" 
-                     alt="Matriz de Correlação"
-                     id="graph-correlacao" 
-                     class="img-fluid rounded graph-thumbnail">
-            </div>
-        </div>
-    </div>
-
-    
-    <div class="col-md-6">
-        <div class="card mb-4">
-            <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Distribuição da Variável Target</h5>
-            </div>
-            <div class="card-body text-center">
-                <img src="{{ url_for('static', filename=plots.distribuicao) }}" 
-                     alt="Distribuição Target" 
-                     class="img-fluid rounded graph-thumbnail">
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-6">
-        <div class="card mb-4">
-            <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Importância das Variáveis</h5>
-            </div>
-            <div class="card-body text-center">
-                <img src="{{ url_for('static', filename=plots.importancia) }}" 
-                     alt="Importância Variáveis" 
-                     class="img-fluid rounded graph-thumbnail">
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-6">
-        <div class="card mb-4">
-            <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Valores Reais vs Previstos</h5>
-            </div>
-            <div class="card-body text-center">
-                <img src="{{ url_for('static', filename=plots.reais_vs_previstos) }}" 
-                     alt="Reais vs Previstos" 
-                     class="img-fluid rounded graph-thumbnail">
-            </div>
-        </div>
-    </div>
-    
-</div>
-
-<div class="row">
-    <div class="col-md-6 offset-md-3">
-        <div class="card mb-4">
-            <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Distribuição dos Resíduos</h5>
-            </div>
-            <div class="card-body text-center">
-                <img src="{{ url_for('static', filename=plots.residuos) }}" 
-                     alt="Distribuição Resíduos" 
-                     class="img-fluid rounded graph-thumbnail">
-            </div>
-        </div>
-    </div>
-</div>
+    <div class="row-graphs">
         
-        <div class="card mb-4">
-            <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Resumo Estatístico do Modelo</h5>
+            <div class="col-md-6 offset-md-3">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Matriz de Correlação</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <img src="{{ url_for('static', filename=plots.correlacao) }}" 
+                            alt="Matriz de Correlação"
+                            class="img-fluid rounded graph-thumbnail">
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <pre>{{ model_summary }}</pre>
+
+            
+            <div class="col-md-6 offset-md-3">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Distribuição da Variável Target</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <img src="{{ url_for('static', filename=plots.distribuicao) }}" 
+                            alt="Distribuição Target" 
+                            class="img-fluid rounded graph-thumbnail">
+                    </div>
+                </div>
+            </div>
+
+        <div class="col-md-6 offset-md-3">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Importância das Variáveis</h5>
+                </div>
+                <div class="card-body text-center">
+                    <img src="{{ url_for('static', filename=plots.importancia) }}" 
+                        alt="Importância Variáveis" 
+                        class="img-fluid rounded graph-thumbnail">
+                </div>
             </div>
         </div>
-    </div>
-</div>
+
+        <div class="col-md-6 offset-md-3">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Valores Reais vs Previstos</h5>
+                </div>
+                <div class="card-body text-center">
+                    <img src="{{ url_for('static', filename=plots.reais_vs_previstos) }}" 
+                        alt="Reais vs Previstos" 
+                        class="img-fluid rounded graph-thumbnail">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 offset-md-3">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Distribuição dos Resíduos</h5>
+                </div>
+                <div class="card-body text-center">
+                    <img src="{{ url_for('static', filename=plots.residuos) }}" 
+                        alt="Distribuição Resíduos" 
+                        class="img-fluid rounded graph-thumbnail">
+                </div>
+            </div>
+        </div>
+      
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Resumo Estatístico do Modelo</h5>
+                </div>
+                <div class="card-body">
+                    <pre>{{ model_summary }}</pre>
+                </div>
+            </div>
+    </div>  
 <script src="{{ url_for('static', filename='viewer.js') }}"></script>
 {% endblock %}

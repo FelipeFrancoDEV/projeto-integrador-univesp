@@ -2,12 +2,13 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa;
+    background: #242020;
+    background-color:#242020;
     text-align: center;
 }
 
 .metric-box {
-    background-color: #f1f8ff;
+    background-color: #242020;
     border-left: 4px solid #0d6efd;
     padding: 15px;
     border-radius: 4px;
@@ -31,22 +32,11 @@ body {
 }
 
 pre {
-    background-color: #f8f9fa;
+    background-color: #0d6efd;
     padding: 15px;
     border-radius: 4px;
     white-space: pre-wrap;
     word-wrap: break-word;
-}
-
-.row {
-    display: flex;
-    padding: 2px;
-}
-
-.mt-5 py-3 bg-light {
-    text-align: center;
-    left: 50%;
-    right: 50%;
 }
 
 .table-responsive {
@@ -58,15 +48,21 @@ pre {
     height: auto;
 }
 
+.mt-5 py-3 bg-light {
+    margin-top: auto;
+}
 
-.button-upload-csv {
+
+/*.button-upload-csv {
     text-decoration: underline;
     font-family: 'Courier New', Courier, monospace white;
     border: 2px solid #0d6efd;
     border-radius: 50px;
 }
+/*
 
 /* Estilos para as imagens dos gráficos */
+
 .img-grafico {
     width: 20px;
     height: 20px;
