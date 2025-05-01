@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f8f9fa;
@@ -36,19 +38,38 @@ pre {
     word-wrap: break-word;
 }
 
+.row {
+    display: flex;
+    padding: 2px;
+}
+
+.mt-5 py-3 bg-light {
+    text-align: center;
+    left: 50%;
+    right: 50%;
+}
+
 .table-responsive {
     overflow-x: auto;
 }
 
 .img-fluid {
-    max-width: 100%;
+    max-width: 70%;
     height: auto;
+}
+
+
+.button-upload-csv {
+    text-decoration: underline;
+    font-family: 'Courier New', Courier, monospace white;
+    border: 2px solid #0d6efd;
+    border-radius: 50px;
 }
 
 /* Estilos para as imagens dos gráficos */
 .img-grafico {
-    max-width: 100%;
-    height: auto;
+    width: 20px;
+    height: 20px;
     border: 1px solid #dee2e6;
     border-radius: 4px;
     padding: 5px;
@@ -59,12 +80,12 @@ pre {
     padding: 20px;
 }
 .image-viewer {
-    display: none;
+    display: flex;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 70%;
+    height: 80%;
     background-color: rgba(0, 0, 0, 0.9);
     z-index: 1000;
     text-align: center;
@@ -72,8 +93,8 @@ pre {
 }
 
 .image-viewer img {
-    max-width: 90%;
-    max-height: 90%;
+    width: 90%;
+    height: 90%;
     margin: auto;
     position: absolute;
     top: 0;
@@ -100,6 +121,7 @@ pre {
 .graph-thumbnail:hover {
     transform: scale(1.03);
 }
+
 
 /* Novos estilos para navegação */
 .viewer-nav {
