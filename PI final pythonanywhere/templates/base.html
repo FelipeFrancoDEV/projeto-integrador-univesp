@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Título mais descritivo -->
+    <title>{% block title %}Análise Preditiva - Indústria Alimentícia{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/styles.css") }}">
+    <!-- Favicon Placeholder (opcional) -->
+    <!-- <link rel="icon" href="{{ url_for("static", filename="favicon.ico") }}"> -->
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <!-- Título/Logo -->
+            <a class="navbar-brand" href="{{ url_for("index") }}">
+                <!-- <img src="{{ url_for("static", filename="images/logo.png") }}" alt="Logo" width="30" height="24" class="d-inline-block align-text-top"> -->
+                Análise Preditiva
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{ url_for("principal") }}">Início</a>
+                    </li>
+                    <!-- Adicionar mais links se necessário -->
+                     <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for("logout") }}">Sair</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-4 mb-5">
+        {% block content %}
+        <!-- Conteúdo específico da página será inserido aqui -->
+        {% endblock %}
+    </main>
+
+    <footer class="footer mt-auto py-3 bg-light border-top">
+        <div class="container text-center">
+            <span class="text-muted">Projeto de Análise Preditiva &copy; 2025 - Alunos de Graduação</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <!-- Custom JS (se necessário) -->
+    {% block scripts %}{% endblock %}
+</body>
+</html>
+

@@ -1,0 +1,290 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    /* Estilos para o visualizador ampliado */
+
+.image-viewer {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #242020;
+    z-index: 1000;
+    align-items: center;
+    text-align: center;
+    overflow: auto;
+}
+
+
+.image-viewer img {
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.col-12 {
+    text-align: center;
+}
+
+.close-viewer {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.graph-thumbnail {
+    cursor: pointer;
+    transition: transform 0.4s;
+}
+
+.graph-thumbnail:hover {
+    transform: scale(1.05);
+}
+
+.row {
+    text-align: center;
+}
+
+.row-graphs {
+    text-align: center;
+}
+
+/* Novos estilos para navegação */
+.viewer-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    transform: translateY(-50%);
+    z-index: 1001;
+}
+
+.nav-btn {
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.nav-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
+    transform: scale(1.1);
+}
+
+.image-counter {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+</style>
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">Resultados da Análise</h1>
+        
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Métricas do Modelo</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="metric-box">
+                            <h6>R² (Coeficiente de Determinação)</h6>
+                            <p class="metric-value">{{ "%.4f"|format(r2) }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="metric-box">
+                            <h6>RMSE (Raiz do Erro Quadrático Médio)</h6>
+                            <p class="metric-value">{{ "%.4f"|format(rmse) }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="metric-box">
+                            <h6>MAE (Erro Absoluto Médio)</h6>
+                            <p class="metric-value">{{ "%.4f"|format(mae) }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>       
+        <!-- Container do visualizador de imagem ampliada -->
+        <div id="imageViewer" class="image-viewer">
+            <span class="close-viewer">&times;</span>
+            <div class="viewer-nav">
+                <button class="nav-btn" id="prevBtn">&#10094;</button>
+                <button class="nav-btn" id="nextBtn">&#10095;</button>
+            </div>
+            <img id="expandedImage" src="" alt="Visualização ampliada">
+            <div class="image-counter" id="imageCounter"></div>
+        </div>
+        
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Coeficientes do Modelo</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Variável</th>
+                                        <th>Coeficiente</th>
+                                        <th>Magnitude</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for coef in coeficientes %}
+                                    <tr>
+                                        <td>{{ coef['Variável'] }}</td>
+                                        <td>{{ "%.4f"|format(coef['Coeficiente']) }}</td>
+                                        <td>{{ "%.4f"|format(coef['Magnitude Absoluta']) }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Fator de Inflação de Variância (VIF)</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Variável</th>
+                                        <th>VIF</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for v in vif %}
+                                    <tr>
+                                        <td>{{ v['Variável'] }}</td>
+                                        <td>{{ "%.2f"|format(v['VIF']) }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Seção para os gráficos -->
+    <div class="row-graphs">
+        
+            <div class="col-md-6 offset-md-3">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Matriz de Correlação</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <img src="{{ url_for('static', filename=plots.correlacao) }}" 
+                            alt="Matriz de Correlação"
+                            class="img-fluid rounded graph-thumbnail">
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="col-md-6 offset-md-3">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Distribuição da Variável Target</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <img src="{{ url_for('static', filename=plots.distribuicao) }}" 
+                            alt="Distribuição Target" 
+                            class="img-fluid rounded graph-thumbnail">
+                    </div>
+                </div>
+            </div>
+
+        <div class="col-md-6 offset-md-3">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Importância das Variáveis</h5>
+                </div>
+                <div class="card-body text-center">
+                    <img src="{{ url_for('static', filename=plots.importancia) }}" 
+                        alt="Importância Variáveis" 
+                        class="img-fluid rounded graph-thumbnail">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 offset-md-3">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Valores Reais vs Previstos</h5>
+                </div>
+                <div class="card-body text-center">
+                    <img src="{{ url_for('static', filename=plots.reais_vs_previstos) }}" 
+                        alt="Reais vs Previstos" 
+                        class="img-fluid rounded graph-thumbnail">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 offset-md-3">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Distribuição dos Resíduos</h5>
+                </div>
+                <div class="card-body text-center">
+                    <img src="{{ url_for('static', filename=plots.residuos) }}" 
+                        alt="Distribuição Resíduos" 
+                        class="img-fluid rounded graph-thumbnail">
+                </div>
+            </div>
+        </div>
+      
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Resumo Estatístico do Modelo</h5>
+                </div>
+                <div class="card-body">
+                    <pre>{{ model_summary }}</pre>
+                </div>
+            </div>
+    </div>  
+<script src="{{ url_for('static', filename='viewer.js') }}"></script>
+{% endblock %}

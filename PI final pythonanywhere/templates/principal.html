@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Início - Análise Preditiva{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 text-center">
+            <h1 class="display-5 mb-3">Análise Preditiva para Otimização na Indústria Alimentícia</h1>
+            <p class="lead mb-4">
+                Bem-vindo à ferramenta de análise preditiva desenvolvida para auxiliar na compreensão
+                e otimização de processos chave na indústria alimentícia. Utilizamos técnicas de regressão linear
+                para analisar dados relevantes e extrair insights valiosos.
+            </p>
+            <hr class="my-4">
+            <p>
+                Esta análise utiliza um conjunto de dados específico (retirado da tabela Dados no Banco de Dados MySQL) para demonstrar
+                a aplicação do modelo. O objetivo é prever a variável <strong>Target</strong> com base
+                nas variáveis de entrada (Inputs).
+            </p>
+            <div class="card shadow-sm mt-4">
+                <div class="card-body">
+                    <h5 class="card-title">Iniciar Análise</h5>
+                    <p class="card-text">Clique no botão abaixo para executar o modelo de regressão linear e visualizar os resultados detalhados.</p>
+                    <a href="{{ url_for("analisar") }}" class="btn btn-primary btn-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-graph-up me-2" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M0 0h1v15h15v1H0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5"/>
+                          </svg>
+                        Executar Análise
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

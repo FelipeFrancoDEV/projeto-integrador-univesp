@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+
+{% block title %}Resultados da Análise - Análise Preditiva{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="display-6 mb-4">Resultados da Análise de Regressão Linear</h1>
+
+    <!-- Seção 1: Resumo e Métricas Principais -->
+    <section id="resumo" class="mb-5">
+        <h2 class="h4 border-bottom pb-2 mb-3">Resumo do Modelo e Desempenho</h2>
+        <div class="row">
+            <div class="col-lg-8">
+                <p class="lead">A análise utilizou um modelo de regressão linear (ElasticNet com PCA) para prever a variável <strong>Target</strong>. O modelo busca entender como as variáveis de entrada (Inputs) influenciam o resultado.</p>
+                <p>A seguir, apresentamos as principais métricas que avaliam a capacidade do modelo em fazer previsões precisas nos dados de teste:</p>
+            </div>
+            <div class="col-lg-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">R² (Coeficiente de Determinação)</h5>
+                        <p class="display-4 text-primary">{{ "%.2f"|format(r2) }}</p>
+                        <p class="card-text text-muted small">Explica aproximadamente {{ "%.0f"|format(r2*100) }}% da variação na variável Target.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <div class="card shadow-sm mb-3">
+                    <div class="card-body text-center">
+                        <h6 class="card-subtitle mb-2 text-muted">RMSE (Erro Médio)</h6>
+                        <p class="h4">{{ "%.2f"|format(rmse) }}</p>
+                        <p class="card-text small">Erro médio das previsões na mesma unidade da variável Target.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card shadow-sm mb-3">
+                    <div class="card-body text-center">
+                        <h6 class="card-subtitle mb-2 text-muted">MAE (Erro Absoluto Médio)</h6>
+                        <p class="h4">{{ "%.2f"|format(mae) }}</p>
+                        <p class="card-text small">Diferença média absoluta entre os valores reais e previstos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção 2: Diagnóstico de Multicolinearidade -->
+    <section id="multicolinearidade" class="mb-5">
+        <h2 class="h4 border-bottom pb-2 mb-3">Diagnóstico: Multicolinearidade</h2>
+        <div class="row">
+            <div class="col-lg-6">
+                <h5>Fator de Inflação de Variância (VIF)</h5>
+                <p>O VIF mede o quanto a variância de um coeficiente de regressão estimado aumenta se as suas variáveis preditoras estiverem correlacionadas. Valores altos (geralmente > 5 ou 10) indicam problemas de multicolinearidade.</p>
+                <div class="table-responsive small-table-container">
+                    <table class="table table-striped table-hover table-sm">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Variável</th>
+                                <th>VIF</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for v in vif %}
+                            <tr class="{{ "table-danger" if v["VIF"] > 10 else ("table-warning" if v["VIF"] > 5 else "") }}">
+                                <td>{{ v["Variável"] }}</td>
+                                <td>{{ "%.2f"|format(v["VIF"]) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <p class="small text-muted mt-2">Valores de VIF muito altos (como os observados para Input05 e Input06) indicam forte correlação, o que pode tornar os coeficientes do modelo instáveis e difíceis de interpretar. Por isso, utilizamos PCA.</p>
+            </div>
+            <div class="col-lg-6">
+                <h5>Matriz de Correlação</h5>
+                <p>Este gráfico mostra visualmente a correlação entre todas as variáveis. Cores fortes (vermelho ou azul) indicam correlações altas.</p>
+                <div class="card shadow-sm graph-card">
+                    <img src="{{ url_for('static', filename='images/correlacao.png') }}"
+                         alt="Matriz de Correlação"
+                         class="img-fluid rounded graph-thumbnail">
+                    <div class="card-footer text-center small text-muted">
+                        Clique para ampliar
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção 3: Tratamento com PCA e Importância das Variáveis -->
+    <section id="pca-importancia" class="mb-5">
+        <h2 class="h4 border-bottom pb-2 mb-3">Solução: PCA e Importância das Variáveis</h2>
+        <div class="row">
+            <div class="col-lg-6">
+                <h5>Análise de Componentes Principais (PCA)</h5>
+                <p>Para lidar com a multicolinearidade, aplicamos PCA, que transforma as variáveis correlacionadas em um conjunto menor de variáveis não correlacionadas (componentes principais), preservando a maior parte da informação original.</p>
+                <div class="table-responsive small-table-container">
+                    <table class="table table-striped table-hover table-sm">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Componente</th>
+                                <th>Variância Individual</th>
+                                <th>Variância Acumulada</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for var in variancia %}
+                            <tr>
+                                <td>{{ var["Componente"] }}</td>
+                                <td>{{ "%.2f%%"|format(var["Variância Individual"]*100) }}</td>
+                                <td>{{ "%.2f%%"|format(var["Variância Acumulada"]*100) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <p class="small text-muted mt-2">Utilizamos {{ variancia|length }} componentes, que juntos explicam {{ "%.2f%%"|format(variancia[-1]["Variância Acumulada"]*100) }} da variância total dos dados originais.</p>
+            </div>
+            <div class="col-lg-6">
+                <h5>Importância das Variáveis Originais</h5>
+                <p>Embora o modelo use os componentes PCA, podemos estimar a importância relativa das variáveis originais na previsão da variável Target.</p>
+                 <div class="card shadow-sm graph-card">
+                    <img src="{{ url_for('static', filename='images/importancia.png') }}"
+                         alt="Importância das Variáveis Originais"
+                         class="img-fluid rounded graph-thumbnail">
+                    <div class="card-footer text-center small text-muted">
+                        Clique para ampliar
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção 4: Avaliação Detalhada do Modelo -->
+    <section id="avaliacao-modelo" class="mb-5">
+        <h2 class="h4 border-bottom pb-2 mb-3">Avaliação Detalhada do Modelo</h2>
+        <p>Analisamos o desempenho do modelo comparando os valores previstos com os valores reais e examinando os erros (resíduos).</p>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <h5>Valores Reais vs. Previstos</h5>
+                <p class="small">Idealmente, os pontos devem se alinhar próximos à linha tracejada vermelha, indicando previsões precisas.</p>
+                <div class="card shadow-sm graph-card">
+                    <img src="{{ url_for('static', filename='images/reais_vs_previstos.png') }}"
+                         alt="Valores Reais vs Previstos"
+                         class="img-fluid rounded graph-thumbnail">
+                    <div class="card-footer text-center small text-muted">
+                        Clique para ampliar
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <h5>Distribuição da Variável Target</h5>
+                <p class="small">Visualização da distribuição dos valores da variável que estamos tentando prever.</p>
+                <div class="card shadow-sm graph-card">
+                    <img src="{{ url_for("static", filename='images/distribuicao.png') }}"
+                         alt="Distribuição Target"
+                         class="img-fluid rounded graph-thumbnail">
+                     <div class="card-footer text-center small text-muted">
+                        Clique para ampliar
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <h5>Distribuição dos Resíduos</h5>
+                <p class="small">Os resíduos são os erros do modelo (diferença entre real e previsto). Idealmente, devem se distribuir normalmente em torno de zero.</p>
+                <div class="card shadow-sm graph-card">
+                    <img src="{{ url_for("static", filename='images/residuos.png') }}"
+                         alt="Distribuição Resíduos"
+                         class="img-fluid rounded graph-thumbnail">
+                    <div class="card-footer text-center small text-muted">
+                        Clique para ampliar
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <h5>Q-Q Plot dos Resíduos</h5>
+                <p class="small">Compara a distribuição dos resíduos com uma distribuição normal teórica. Pontos próximos à linha vermelha indicam normalidade.</p>
+                <div class="card shadow-sm graph-card">
+                    <img src="{{ url_for("static", filename='images/Q_Qplot.png') }}"
+                         alt="Q-Q Plot Resíduos"
+                         class="img-fluid rounded graph-thumbnail">
+                    <div class="card-footer text-center small text-muted">
+                        Clique para ampliar
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção 5: Conclusões e Próximos Passos -->
+    <section id="conclusoes" class="mb-4">
+        <h2 class="h4 border-bottom pb-2 mb-3">Conclusões</h2>
+        <div class="alert alert-info" role="alert">
+            <h5 class="alert-heading">Interpretação Geral</h5>
+            <p>O modelo desenvolvido consegue explicar uma parte significativa da variação na variável Target (R² ≈ {{ "%.2f"|format(r2) }}). As variáveis mais influentes foram identificadas, e a análise de resíduos fornece insights sobre onde o modelo pode ser aprimorado.</p>
+            <hr>
+            <p class="mb-0"><strong>Observações Importantes:</strong> A análise de resíduos (Distribuição e Q-Q Plot) sugere que os erros do modelo não seguem perfeitamente uma distribuição normal, e o gráfico de Reais vs. Previstos mostra alguns padrões que podem indicar relações não-lineares não capturadas totalmente pelo modelo atual. A validação cruzada (não mostrada aqui, mas realizada na análise offline) também indicou alguma instabilidade.</p>
+        </div>
+
+    </section>
+
+</div>
+
+<!-- Container do visualizador de imagem ampliada -->
+<div id="imageViewer" class="image-viewer">
+    <span class="close-viewer">&times;</span>
+    <div class="viewer-nav">
+        <button class="nav-btn" id="prevBtn" title="Anterior">&#10094;</button>
+        <button class="nav-btn" id="nextBtn" title="Próximo">&#10095;</button>
+    </div>
+    <img id="expandedImage" src="" alt="Visualização ampliada">
+    <div class="image-counter" id="imageCounter"></div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<!-- Incluir o JavaScript do visualizador -->
+<script src="{{ url_for("static", filename="js/viewer.js") }}"></script>
+{% endblock %}
+

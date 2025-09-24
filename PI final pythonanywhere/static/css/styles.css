@@ -1,0 +1,191 @@
+/* styles.css */
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f8f9fa; /* Light gray background */
+}
+
+main {
+    flex: 1; /* Makes the main content area grow */
+}
+
+.navbar {
+    /* Optional: Add custom navbar styles if needed */
+}
+
+.footer {
+    font-size: 0.9em;
+}
+
+/* Card styles */
+.card {
+    border: none; /* Remove default border */
+}
+
+.card-header {
+    /* Consistent header styling */
+}
+
+.metric-box {
+    /* Original style from user's HTML */
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+    background-color: #fff;
+}
+
+.metric-value {
+    /* Original style from user's HTML */
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #0d6efd; /* Bootstrap primary color */
+}
+
+/* Table styles */
+.table-sm th,
+.table-sm td {
+    padding: 0.4rem; /* Slightly smaller padding for compact tables */
+    vertical-align: middle;
+}
+
+.small-table-container {
+    max-height: 300px; /* Limit height for VIF/PCA tables */
+    overflow-y: auto;
+}
+
+/* Graph styles */
+.graph-card {
+    overflow: hidden; /* Ensure rounded corners apply to image */
+}
+
+.graph-thumbnail {
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    display: block; /* Remove extra space below image */
+    width: 100%; /* Ensure image fills card width */
+}
+
+.graph-thumbnail:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-footer.text-muted {
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+}
+
+/* Image Viewer Styles (Moved from inline) */
+.image-viewer {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 1050; /* Ensure it's above other content */
+    text-align: center;
+    overflow: auto;
+}
+
+.image-viewer img {
+    max-width: 90%;
+    max-height: 90%;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: white; /* Add white background for transparency */
+    padding: 5px; /* Small padding around image */
+    border-radius: 5px;
+}
+
+.close-viewer {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    z-index: 1052;
+}
+
+.close-viewer:hover,
+.close-viewer:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.viewer-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    transform: translateY(-50%);
+    z-index: 1051;
+    box-sizing: border-box;
+}
+
+.nav-btn {
+    background: rgba(50, 50, 50, 0.6);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    user-select: none; /* Prevent text selection */
+}
+
+.nav-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
+    transform: scale(1.1);
+}
+
+.image-counter {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    z-index: 1051;
+}
+
+/* Utility classes */
+.display-4 {
+    font-weight: 300;
+}
+
+.display-5 {
+    font-weight: 300;
+}
+
+.display-6 {
+    font-weight: 300;
+}
+
+.border-bottom {
+    border-color: #dee2e6 !important;
+}
+
