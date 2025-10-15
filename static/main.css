@@ -1,0 +1,73 @@
+/* Estilos Gerais */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #512da8, #9575cd);
+    color: #fff;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*  Container  */
+.container {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 40px 60px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+}
+
+/* Título e Parágrafo */
+h1 {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+p {
+    font-weight: 300;
+    margin-bottom: 25px;
+}
+
+/* Botões */
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.btn {
+    background-color: #fff;
+    color: #512da8;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn:hover {
+    background-color: #9575cd;
+    color: #fff;
+}
+
+/* Voltar */
+.back-btn {
+    background-color: transparent;
+    color: #fff;
+    border: 1px solid #fff;
+}
+
+.back-btn:hover {
+    background-color: #fff;
+    color: #512da8;
+}
